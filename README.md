@@ -51,11 +51,12 @@ Contributions from developers like you make Unified Shell better. Here's how you
 ## Content of Files
 | File                | Description                                  |
 | ------------------- | -------------------------------------------- |
-| [AUTHORS](link)     | List of contributors to the repository       |
+| [AUTHORS](https://github.com/mammadova04/holbertonschool-simple_shell/blob/main/AUTHORS)     | List of contributors to the repository       |
 | [man_1_simple_shell](link)  | Information about the repository             |
 | [main.h](link)      | Prototypes, functions, and headers           |
 | [Flowchart](link)   | Visual representation of shell's workflow    |
 
-##Authors
+## Authors
+
 -Narmin Mammadova
 -Rufat Jabbarov
