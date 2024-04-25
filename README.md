@@ -1,7 +1,9 @@
-#C - Simple Shell
+# C - Simple Shell
+
 ![alt text](https://uploads-ssl.webflow.com/6105315644a26f77912a1ada/63eea844ae4e3022154e2878_Holberton.png)
 
-##Overview
+## Overview
+
 Basic Shell is a simple, interactive command line interpreter that provides a user interface to access the operating system's services. It is designed to execute commands and manage your files and processes.
 
 ## General
