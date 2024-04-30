@@ -1,43 +1,45 @@
 #include "main.h"
-#include <errno.h>
 /**
   * main - shell start function
   * @argv: argument variables
-  * @argc: argument counter
+  * @argc: argument count
+  * @env: env variables
   * Return: always 0
   */
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
-	char **fcommand;
-	size_t n = 0;
-	pid_t pid;
-	struct stat st;
-	int status;
+	char **fcommand, *buf, *command;
+	int status, lk = 0, r_code = 0;
+
+	(void)argc, path_var = get_path(env);
 	while (1)
 	{
-		status = isatty(STDIN_FILENO);
-		if (status)
-			printf("#cisfun$ ");
-		else
-			errno = 0;
-		fcommand = get_command();
-		if (fcommand == NULL)
+		status = isatty(STDIN_FILENO), print_prompt(status);
+		fcommand = get_command(&buf);
+		if (!strcmp(fcommand[0], " "))
 		{
-			printf("\n");
-			break;
-		}
-		if (stat(fcommand[0], &st) == -1)
-		{
-			perror(argv[0]);
+			free(buf), free(fcommand[0]), free(fcommand);
 			continue;
 		}
-		pid = fork();
-		if (pid == 0)
+		command = strdup(fcommand[0]);
+		if (!strcmp("env", fcommand[0]))
 		{
-			execve(fcommand[0], fcommand, environ);
+			print_env(), free(buf), free(fcommand), free(command);
+			continue;
 		}
-		else
-			wait(NULL);
+		fcommand[0] = find_file(fcommand[0], &lk);
+		if (!fcommand[0])
+		{
+			dprintf(2, "%s: 1: %s: not found\n", argv[0], command);
+			free(buf), free(fcommand), free(command), errno = 0;
+			if (!status)
+				free_path(), exit(127);
+			continue;
+		}
+		r_code = exec_c(fcommand), free(buf);
+		if (lk)
+			free(fcommand[0]), lk = 0;
+		free(fcommand), free(command);
 	}
-	return (0);
+	return (r_code);
 }
