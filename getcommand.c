@@ -62,7 +62,6 @@ char **get_command(void)
 	}
 
 	array[l] = NULL;
-
 	return (array);
 }
 
