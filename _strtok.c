@@ -1,5 +1,10 @@
 #include "main.h"
-
+/**
+  * _strtok - my strtok implementation
+  * @str: string for tokenization
+  * @delim: delimiter
+  * Return: array of tokens
+  */
 char **_strtok(char *str, char delim)
 {
 	char **array, *start, *end;
