@@ -50,3 +50,16 @@ char **get_path(char **env)
 	}
 	return (array);
 }
+/**
+ * free_path - free path buffer
+ */
+void free_path(void)
+{
+	int i = 0;
+
+	if (!path_var)
+		return;
+	while (path_var[i])
+		free(path_var[i++]);
+	free(path_var);
+}
