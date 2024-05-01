@@ -21,6 +21,7 @@ char *find_file(char *command, int *lk)
 		len = strlen(path_var[i]);
 		temp = strdup(path_var[i]);
 		temp = realloc(temp, len + strlen(command) + 1);
+		temp[len] = '/', temp[len + 1] = '\0';
 		temp = strcat(temp, command);
 		if (!stat(temp, &st))
 		{
@@ -32,4 +33,4 @@ char *find_file(char *command, int *lk)
 		free(temp);
 	}
 	return (NULL);
-}
+}i
