@@ -11,9 +11,9 @@ char **path_var;
  */
 char *find_file(char *command, int *lk)
 {
-    int i = 0;
-    int max_len = 0;
-    int j;
+	int i = 0;
+	int max_len = 0;
+	int j;
     char *temp, *result = NULL;
     struct stat st;
 
