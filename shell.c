@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+  * main_helper - helper function for main
+  * @fcommand: tokenaized user command
+  * @status: status about echo
+  * @buf: user input
+  * Return: if break needed 1 else 0
+  */
 int main_helper(char **fcommand, int status, char *buf)
 {
 	if (fcommand == NULL)
