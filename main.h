@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-char **path_var;
+extern char **path_var;
 extern char **environ;
 char **get_command(char **);
 char **get_path(char **);

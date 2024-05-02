@@ -1,4 +1,5 @@
 #include "main.h"
+char **path_var;
 /**
   * main_helper - helper function for main
   * @fcommand: tokenaized user command
