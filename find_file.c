@@ -1,59 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <errno.h>
 #include "main.h"
 
-char **path_var;
+char *try_path(char *command, char *path, int *lk);
 
-/**
- * find_file - finds file location in path variables
- * @command: user input
- * @lk: flag for whether this command uses path or not
- *
- * Return: modified user input
- */
-char *find_file(char *command, int *lk)
+char *find_file(char *command, char **path_var, int *lk)
 {
 	int i = 0;
-	int max_len = 0;
-	int j;
-    char *temp, *result = NULL;
-    struct stat st;
+	char *result = NULL;
+	struct stat st;
 
-    if (command[0] == '/' || command[0] == '.')
-    {
-        if (!stat(command, &st))
-        {
-            result = strdup(command);
-            if (result != NULL)
-                (*lk)++;
-        }
-        return (result);
-    }
+	if (command[0] == '/' || command[0] == '.')
+	{
+		if (!stat(command, &st))
+		{
+			result = strdup(command);
+			if (result != NULL)
+				(*lk)++;
+		}
+		return result;
+	}
 
-    if (!path_var)
-        return (NULL);
+	if (!path_var)
+		return NULL;
 
-    for (j = 0; path_var[j] != NULL; j++)
-        max_len += strlen(path_var[j]) + strlen(command) + 2;
+	while (path_var[i])
+	{
+		result = try_path(command, path_var[i], lk);
+		if (result != NULL)
+			return result;
+		i++;
+	}
 
-    temp = malloc(max_len);
-    if (temp == NULL)
-        return (NULL);
+	return NULL;
+}
 
-    while (path_var[i])
-    {
-        strcpy(temp, path_var[i]);
-        strcat(temp, "/");
-        strcat(temp, command);
-        if (!stat(temp, &st))
-        {
-            (*lk)++;
-            errno = 0;
-            result = strdup(temp);
-            break;
-        }
-        i++;
-    }
+char *try_path(char *command, char *path, int *lk)
+{
+	char *temp = NULL;
+	char *result = NULL;
+	struct stat st;
 
-    free(temp);
-    return result;
+	int max_len = strlen(path) + strlen(command) + 2;
+	temp = malloc(max_len);
+	if (temp == NULL)
+		return NULL;
+
+	strcpy(temp, path);
+	strcat(temp, "/");
+	strcat(temp, command);
+
+	if (!stat(temp, &st))
+	{
+		(*lk)++;
+		errno = 0;
+		result = strdup(temp);
+	}
+
+	free(temp);
+	return result;
+}
+
+int main(void)
+{
+	char **path_var = {"path1", "path2", NULL};
+	int lk = 0;
+	char *command = "test.txt";
+	char *result = find_file(command, path_var, &lk);
+	if (result != NULL)
+	{
+		printf("File found at: %s\n", result);
+		free(result);
+	}
+	else
+	{
+		printf("File not found.\n");
+	}
+	return 0;
 }
 
