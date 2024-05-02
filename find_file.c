@@ -1,14 +1,19 @@
 #include "main.h"
 
+char **path_var;
+
 /**
  * find_file - finds file location in path variables
  * @command: user input
- * @lk: is the flag for is this command use path or not
+ * @lk: flag for whether this command uses path or not
+ *
  * Return: modified user input
  */
 char *find_file(char *command, int *lk)
 {
-    int i = 0, len;
+    int i = 0;
+    int max_len = 0;
+    int j;
     char *temp, *result = NULL;
     struct stat st;
 
@@ -26,12 +31,15 @@ char *find_file(char *command, int *lk)
     if (!path_var)
         return (NULL);
 
+    for (j = 0; path_var[j] != NULL; j++)
+        max_len += strlen(path_var[j]) + strlen(command) + 2;
+
+    temp = malloc(max_len);
+    if (temp == NULL)
+        return (NULL);
+
     while (path_var[i])
     {
-        len = strlen(path_var[i]);
-        temp = malloc(len + strlen(command) + 2);
-        if (temp == NULL)
-            return (NULL);
         strcpy(temp, path_var[i]);
         strcat(temp, "/");
         strcat(temp, command);
@@ -39,12 +47,13 @@ char *find_file(char *command, int *lk)
         {
             (*lk)++;
             errno = 0;
-            result = temp;
+            result = strdup(temp);
             break;
         }
         i++;
-        free(temp);
     }
-    return (result);
+
+    free(temp);
+    return result;
 }
 
