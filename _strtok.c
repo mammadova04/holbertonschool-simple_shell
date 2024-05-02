@@ -1,17 +1,25 @@
 #include "main.h"
+
 /**
-  * _strtok - my strtok implementation
-  * @str: string for tokenization
-  * @delim: delimiter
-  * Return: array of tokens
-  */
+ * _strtok - Custom implementation of strtok
+ * @str: String to tokenize
+ * @delim: Delimiter character
+ *
+ * Return: Array of tokens
+ */
 char **_strtok(char *str, char delim)
 {
 	char **array, *start, *end;
-	int i = 0, j = 1, f = 0;
+	int i = 0, j = 1, max_tokens = 10;
 
 	if (str == NULL)
 		return (NULL);
+
+	array = malloc(sizeof(char *) * max_tokens);
+
+	if (array == NULL)
+		return (NULL);
+
 	while (str[i])
 	{
 		if (str[i] != delim)
@@ -19,10 +27,6 @@ char **_strtok(char *str, char delim)
 			start = str + i;
 			while (str[i] != delim && str[i])
 				i++;
-			if (j == 1)
-				array = malloc(sizeof(char *) * j), f++;
-			else
-				array = realloc(array, sizeof(char *) * j);
 			if (str[i] == '\0')
 			{
 				array[j - 1] = strdup(start);
@@ -39,10 +43,8 @@ char **_strtok(char *str, char delim)
 		}
 		i++;
 	}
-	if (f == 0)
-		array = malloc(sizeof(char *));
-	else
-		array = realloc(array, sizeof(char *) * j);
+
 	array[j - 1] = NULL;
 	return (array);
 }
+
