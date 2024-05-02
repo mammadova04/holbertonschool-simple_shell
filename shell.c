@@ -55,7 +55,7 @@ int main(int argc, char **argv, char **env)
 		fcommand[0] = find_file(fcommand[0], &lk);
 		if (!fcommand[0])
 		{
-			dprintf(2, "%s: 1: %s: not found\n", argv[0], command);
+			fprintf(stderr, "%s: 1: %s: not found\n", argv[0], command);
 			free(buf), free(fcommand), free(command), errno = 0;
 			if (!status)
 				free_path(), exit(127);
