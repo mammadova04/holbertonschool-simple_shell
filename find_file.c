@@ -33,4 +33,4 @@ char *find_file(char *command, int *lk)
 		free(temp);
 	}
 	return (NULL);
-}i
+}
