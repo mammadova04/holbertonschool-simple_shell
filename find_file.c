@@ -7,6 +7,19 @@
 
 char *try_path(char *command, char *path, int *lk);
 
+/**
+ * find_file - Finds the location of a file in path variables.
+ *
+ * @command: User input specifying the file.
+ * @path_var: Array of path variables.
+ * @lk: Flag indicating whether this command uses path or not.
+ *
+ * This function searches for the specified file in the provided path
+ * variables. If the file is found, it returns the path to the file;
+ * otherwise, it returns NULL.
+ *
+ * Return: Pointer to the path of the file if found, otherwise NULL.
+ */
 char *find_file(char *command, char **path_var, int *lk)
 {
 	int i = 0;
@@ -21,21 +34,21 @@ char *find_file(char *command, char **path_var, int *lk)
 			if (result != NULL)
 				(*lk)++;
 		}
-		return result;
+		return (result);
 	}
 
 	if (!path_var)
-		return NULL;
+		return (NULL);
 
 	while (path_var[i])
 	{
 		result = try_path(command, path_var[i], lk);
 		if (result != NULL)
-			return result;
+			return (result);
 		i++;
 	}
 
-	return NULL;
+	return (NULL);
 }
 
 char *try_path(char *command, char *path, int *lk)
@@ -45,9 +58,11 @@ char *try_path(char *command, char *path, int *lk)
 	struct stat st;
 
 	int max_len = strlen(path) + strlen(command) + 2;
+
 	temp = malloc(max_len);
+
 	if (temp == NULL)
-		return NULL;
+		return (NULL);
 
 	strcpy(temp, path);
 	strcat(temp, "/");
@@ -61,7 +76,7 @@ char *try_path(char *command, char *path, int *lk)
 	}
 
 	free(temp);
-	return result;
+	return (result);
 }
 
 int main(void)
@@ -70,6 +85,7 @@ int main(void)
 	int lk = 0;
 	char *command = "test.txt";
 	char *result = find_file(command, path_var, &lk);
+
 	if (result != NULL)
 	{
 		printf("File found at: %s\n", result);
@@ -79,6 +95,6 @@ int main(void)
 	{
 		printf("File not found.\n");
 	}
-	return 0;
+	return (0);
 }
 
