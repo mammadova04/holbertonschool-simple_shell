@@ -54,9 +54,8 @@ Contributions from developers like you make Unified Shell better. Here's how you
 | [AUTHORS](https://github.com/mammadova04/holbertonschool-simple_shell/blob/main/AUTHORS)     | List of contributors to the repository       |
 | [man_1_simple_shell](https://github.com/mammadova04/holbertonschool-simple_shell/blob/main/man_1_simple_shell)  | Information about the repository             |
 | [main.h](https://github.com/mammadova04/holbertonschool-simple_shell/blob/main/main.h)      | Prototypes, functions, and headers           |
-| [Flowchart](link)   | Visual representation of shell's workflow    |
 
 ## Authors
 
--Narmin Mammadova
--Rufat Jabbarov
+-Narmin Mammadova (https://github.com/mammadova04)
+-Rufat Jabbarov (https://github.com/rufatjabbarov22)
